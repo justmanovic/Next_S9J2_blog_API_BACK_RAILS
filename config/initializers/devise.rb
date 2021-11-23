@@ -10,14 +10,8 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
-        jwt.dispatch_requests = [
-        ['POST', %r{^/api/login$}]
-      ]
-      jwt.revocation_requests = [
-        ['DELETE', %r{^/api/logout$}]
-      ]
-      jwt.expiration_time = 1.day.to_i
+    # jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = 'bc2d0350c0ec88bda931d4e496e7d58a1064354d2c3f10727519603d5391bd97d43410db74c8a349857b18776fbdd0c8105c4cfe84616fdbdfa829aed0126498'
   end
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -312,6 +306,8 @@ Devise.setup do |config|
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end
+
+
 
   # ==> Configuration for :registerable
 
