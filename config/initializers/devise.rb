@@ -5,10 +5,20 @@
 # are not: uncommented lines are intended to protect your configuration from
 # breaking changes in upgrades (i.e., in the event that future versions of
 # Devise change the default values for those options).
-#
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  config.jwt do |jwt|
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+        jwt.dispatch_requests = [
+        ['POST', %r{^/api/login$}]
+      ]
+      jwt.revocation_requests = [
+        ['DELETE', %r{^/api/logout$}]
+      ]
+      jwt.expiration_time = 1.day.to_i
+  end
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -31,9 +41,7 @@ Devise.setup do |config|
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
-  config.jwt do |jwt|
-    jwt.secret = '8c03d17b3f91f35be22255bae48525e2dcfa67d7845b9477d2bc6ece7b96f02c6d686985b6d88c33f819c8401a4d8c9daebd0e7d0c0f76a90c74c9d8c510eca4'
-  end
+
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
